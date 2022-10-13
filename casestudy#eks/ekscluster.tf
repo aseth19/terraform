@@ -5,6 +5,7 @@ resource "aws_eks_cluster" "aws_eks" {
   role_arn = aws_iam_role.eks_cluster.arn
 
   vpc_config {
+    endpoint_public_access = false
     subnet_ids = module.vpc.public_subnets
   }
 
@@ -16,6 +17,9 @@ resource "aws_eks_cluster" "aws_eks" {
   tags = {
     Name = "EKS_Cluster_LevelUp"
   }
+   encryption_config {
+     resources = ["secrets"]
+   }
 }
 
 resource "aws_eks_node_group" "node" {

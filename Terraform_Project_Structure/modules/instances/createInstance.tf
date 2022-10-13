@@ -50,4 +50,8 @@ resource "aws_instance" "my-instance" {
     Name         = "instance-${var.ENVIRONMENT}"
     Environmnent = var.ENVIRONMENT
   }
+  monitoring = true
+  ebs_optimized = true
+  monitoring = true
+  ebs_optimized = true
 }
