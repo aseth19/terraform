@@ -97,6 +97,10 @@ resource "aws_lb" "levelup-load-balancer" {
   security_groups    = [aws_security_group.levelup_webservers_alb.id]
   subnets            = ["${var.vpc_public_subnet1}", "${var.vpc_public_subnet2}"]
 
+  access_logs {
+    enabled = true
+  }
+  drop_invalid_header_fields = true
 }
 
 # Add Target Group
