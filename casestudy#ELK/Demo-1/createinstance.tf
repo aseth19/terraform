@@ -65,6 +65,8 @@ resource "aws_instance" "MyFirstInstnace" {
   tags = {
     Name = "custom_instance"
   }
+   ebs_optimized = true
+   monitoring = true
 }
 
 resource "aws_eip" "ip" {
