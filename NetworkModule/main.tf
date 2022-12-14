@@ -25,4 +25,6 @@ resource "aws_instance" "levelup_instance" {
   tags = {
 		Environment         = var.environment_tag
 	}
+  monitoring = true
+  ebs_optimized = true
 }

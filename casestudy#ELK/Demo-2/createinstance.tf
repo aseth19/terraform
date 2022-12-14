@@ -100,6 +100,8 @@ resource "aws_instance" "MyFirstInstnace" {
     user        = var.INSTANCE_USERNAME
     private_key = file(var.PATH_TO_PRIVATE_KEY)
   }
+   monitoring = true
+   ebs_optimized = true
 }
 
 resource "aws_eip" "ip" {
