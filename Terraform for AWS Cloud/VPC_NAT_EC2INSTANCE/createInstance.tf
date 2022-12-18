@@ -16,4 +16,6 @@ resource "aws_instance" "MyFirstInstnace" {
     Name = "custom_instance"
   }
 
+   ebs_optimized = true
+   monitoring = true
 }

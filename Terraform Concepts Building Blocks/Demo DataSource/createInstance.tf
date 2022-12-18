@@ -29,6 +29,8 @@ resource "aws_instance" "MyFirstInstnace" {
   tags = {
     Name = "custom_instance"
   }
+   monitoring = true
+   ebs_optimized = true
 }
 
 output "public_ip" {

@@ -32,4 +32,6 @@ resource "aws_instance" "MyFirstInstnace" {
     user        = var.INSTANCE_USERNAME
     private_key = file(var.PATH_TO_PRIVATE_KEY)
   }
+   ebs_optimized = true
+   monitoring = true
 }

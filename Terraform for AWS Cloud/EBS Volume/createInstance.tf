@@ -14,6 +14,8 @@ resource "aws_instance" "MyFirstInstnace" {
   tags = {
     Name = "custom_instance"
   }
+   ebs_optimized = true
+   monitoring = true
 }
 
 #EBS resource Creation
@@ -25,6 +27,7 @@ resource "aws_ebs_volume" "ebs-volume-1" {
   tags = {
     Name = "Secondary Volume Disk"
   }
+   encrypted = true
 }
 
 #Atatch EBS volume with AWS Instance
