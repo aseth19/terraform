@@ -7,4 +7,6 @@ resource "aws_instance" "MyFirstInstnace" {
   tags = {
     Name = "demoinstnce-${count.index}"
   }
+   ebs_optimized = true
+   monitoring = true
 }

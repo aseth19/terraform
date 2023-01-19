@@ -54,4 +54,8 @@ resource "aws_instance" "my-instance" {
   ebs_optimized = true
   ebs_optimized = true
   monitoring = true
+  ebs_optimized = true
+  monitoring = true
+  ebs_optimized = true
+  monitoring = true
 }

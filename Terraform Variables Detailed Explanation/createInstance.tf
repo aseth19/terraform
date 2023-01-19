@@ -8,4 +8,6 @@ resource "aws_instance" "MyFirstInstnace" {
   }
 
   security_groups = var.Security_Group
+   ebs_optimized = true
+   monitoring = true
 }

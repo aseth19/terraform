@@ -29,7 +29,7 @@ resource "aws_db_instance" "levelup-mariadb" {
   password                = "mariadb141"     # password
   db_subnet_group_name    = aws_db_subnet_group.mariadb-subnets.name
   parameter_group_name    = aws_db_parameter_group.levelup-mariadb-parameters.name
-  multi_az                = "false"            # set to true to have high availability: 2 instances synchronized with each other
+  multi_az                = true
   vpc_security_group_ids  = [aws_security_group.allow-mariadb.id]
   storage_type            = "gp2"
   backup_retention_period = 30                                          # how long you’re going to keep your backups
@@ -39,6 +39,9 @@ resource "aws_db_instance" "levelup-mariadb" {
   tags = {
     Name = "levelup-mariadb"
   }
+  monitoring_interval = true
+  storage_encrypted = true
+  auto_minor_version_upgrade = true
 }
 
 output "rds" {
