@@ -27,7 +27,6 @@ resource "aws_ebs_volume" "ebs-volume-1" {
   tags = {
     Name = "Secondary Volume Disk"
   }
-   encrypted = true
 }
 
 #Atatch EBS volume with AWS Instance
