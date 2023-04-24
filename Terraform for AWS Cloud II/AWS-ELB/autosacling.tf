@@ -14,8 +14,11 @@ resource "aws_launch_configuration" "levelup-launchconfig" {
 
 #Generate Key
 resource "aws_key_pair" "levelup_key" {
-    key_name = "levelup_key"
-    public_key = file(var.PATH_TO_PUBLIC_KEY)
+  key_name   = "levelup_key"
+  public_key = file(var.PATH_TO_PUBLIC_KEY)
+  tags = {
+    yor_trace = "bcf33c8a-6577-4680-bca3-00d52ecbe0f0"
+  }
 }
 
 #Autoscaling Group
