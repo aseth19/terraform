@@ -6,16 +6,17 @@ resource "aws_eks_cluster" "aws_eks" {
 
   vpc_config {
     endpoint_public_access = false
-    subnet_ids = module.vpc.public_subnets
+    subnet_ids             = module.vpc.public_subnets
   }
 
   depends_on = [
-    aws_iam_role_policy_attachment.AmazonEKSClusterPolicy,  
+    aws_iam_role_policy_attachment.AmazonEKSClusterPolicy,
     aws_iam_role_policy_attachment.AmazonEKSServicePolicy,
   ]
 
   tags = {
-    Name = "EKS_Cluster_LevelUp"
+    Name      = "EKS_Cluster_LevelUp"
+    yor_trace = "f5ab9ba4-fa85-418a-8b6d-3eb61bd6ea4e"
   }
 }
 
@@ -38,4 +39,7 @@ resource "aws_eks_node_group" "node" {
     aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
   ]
+  tags = {
+    yor_trace = "0bf2d011-0d2d-49fd-a7ca-f52c35d467a0"
+  }
 }

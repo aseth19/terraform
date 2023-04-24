@@ -1,10 +1,10 @@
 # Create Instance uisng Custom VPC
 
 module "develop-vpc" {
-    source      = "../modules/vpc"
+  source = "../modules/vpc"
 
-    ENVIRONMENT = var.ENVIRONMENT
-    AWS_REGION  = var.AWS_REGION
+  ENVIRONMENT = var.ENVIRONMENT
+  AWS_REGION  = var.AWS_REGION
 }
 
 provider "aws" {
@@ -13,8 +13,11 @@ provider "aws" {
 
 #Resource key pair
 resource "aws_key_pair" "levelup_key" {
-  key_name      = "levelup_key"
-  public_key    = file(var.public_key_path)
+  key_name   = "levelup_key"
+  public_key = file(var.public_key_path)
+  tags = {
+    yor_trace = "13f1b97b-7a95-4cf4-8207-88e2d78a9aa1"
+  }
 }
 
 #Secutiry Group for Instances
@@ -40,6 +43,7 @@ resource "aws_security_group" "allow-ssh" {
   tags = {
     Name         = "allow-ssh"
     Environmnent = var.ENVIRONMENT
+    yor_trace    = "f853c7c7-00e1-487d-a15b-9949a7f3a29e"
   }
 }
 
@@ -49,7 +53,7 @@ resource "aws_instance" "my-instance" {
   instance_type = var.INSTANCE_TYPE
 
   # the VPC subnet
-  subnet_id = element(module.develop-vpc.public_subnets, 0)
+  subnet_id         = element(module.develop-vpc.public_subnets, 0)
   availability_zone = "${var.AWS_REGION}a"
 
   # the security group
@@ -61,7 +65,8 @@ resource "aws_instance" "my-instance" {
   tags = {
     Name         = "instance-${var.ENVIRONMENT}"
     Environmnent = var.ENVIRONMENT
+    yor_trace    = "8181f086-3dcd-469c-8ff1-8775381569f8"
   }
-  monitoring = true
+  monitoring    = true
   ebs_optimized = true
 }
