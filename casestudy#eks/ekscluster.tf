@@ -17,6 +17,9 @@ resource "aws_eks_cluster" "aws_eks" {
   tags = {
     Name = "EKS_Cluster_LevelUp"
   }
+   encryption_config {
+     resources = ["secrets"]
+   }
 }
 
 resource "aws_eks_node_group" "node" {
