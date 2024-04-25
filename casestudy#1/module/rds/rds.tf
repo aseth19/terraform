@@ -10,61 +10,66 @@
 #Define Subnet Group for RDS Service
 resource "aws_db_subnet_group" "levelup-rds-subnet-group" {
 
-    name          = "${var.ENVIRONMENT}-levelup-db-snet"
-    description   = "Allowed subnets for DB cluster instances"
-    subnet_ids    = [
-      "${var.vpc_private_subnet1}",
-      "${var.vpc_private_subnet2}",
-    ]
-    tags = {
-        Name         = "${var.ENVIRONMENT}_levelup_db_subnet"
-    }
+  name        = "${var.ENVIRONMENT}-levelup-db-snet"
+  description = "Allowed subnets for DB cluster instances"
+  subnet_ids = [
+    "${var.vpc_private_subnet1}",
+    "${var.vpc_private_subnet2}",
+  ]
+  tags = {
+    Name      = "${var.ENVIRONMENT}_levelup_db_subnet"
+    yor_trace = "71490c50-fc9c-40b3-b9cd-79d58aeb417a"
+  }
 }
 
 #Define Security Groups for RDS Instances
 resource "aws_security_group" "levelup-rds-sg" {
 
-  name = "${var.ENVIRONMENT}-levelup-rds-sg"
+  name        = "${var.ENVIRONMENT}-levelup-rds-sg"
   description = "Created by LevelUp"
   vpc_id      = var.vpc_id
 
   ingress {
-    from_port = 3306
-    to_port = 3306
-    protocol = "tcp"
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
     cidr_blocks = ["${var.RDS_CIDR}"]
 
   }
 
   egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-    tags = {
-    Name = "${var.ENVIRONMENT}-levelup-rds-sg"
-   }
+  tags = {
+    Name      = "${var.ENVIRONMENT}-levelup-rds-sg"
+    yor_trace = "95520bd8-f430-4a6b-968a-0e16bf5be38c"
+  }
 }
 
 resource "aws_db_instance" "levelup-rds" {
-  identifier = "${var.ENVIRONMENT}-levelup-rds"
-  allocated_storage = var.LEVELUP_RDS_ALLOCATED_STORAGE
-  storage_type = "gp2"
-  engine = var.LEVELUP_RDS_ENGINE
-  engine_version = var.LEVELUP_RDS_ENGINE_VERSION
-  instance_class = var.DB_INSTANCE_CLASS
-  backup_retention_period = var.BACKUP_RETENTION_PERIOD
-  publicly_accessible = var.PUBLICLY_ACCESSIBLE
-  username = var.LEVELUP_RDS_USERNAME
-  password = var.LEVELUP_RDS_PASSWORD
-  vpc_security_group_ids = [aws_security_group.levelup-rds-sg.id]
-  db_subnet_group_name = aws_db_subnet_group.levelup-rds-subnet-group.name
-  multi_az = true
-   auto_minor_version_upgrade = true
-   storage_encrypted = true
-   monitoring_interval = true
+  identifier                 = "${var.ENVIRONMENT}-levelup-rds"
+  allocated_storage          = var.LEVELUP_RDS_ALLOCATED_STORAGE
+  storage_type               = "gp2"
+  engine                     = var.LEVELUP_RDS_ENGINE
+  engine_version             = var.LEVELUP_RDS_ENGINE_VERSION
+  instance_class             = var.DB_INSTANCE_CLASS
+  backup_retention_period    = var.BACKUP_RETENTION_PERIOD
+  publicly_accessible        = var.PUBLICLY_ACCESSIBLE
+  username                   = var.LEVELUP_RDS_USERNAME
+  password                   = var.LEVELUP_RDS_PASSWORD
+  vpc_security_group_ids     = [aws_security_group.levelup-rds-sg.id]
+  db_subnet_group_name       = aws_db_subnet_group.levelup-rds-subnet-group.name
+  multi_az                   = true
+  auto_minor_version_upgrade = true
+  storage_encrypted          = true
+  monitoring_interval        = true
+  tags = {
+    yor_trace = "741312b9-14bb-408d-a73b-0c40dcf7922b"
+  }
 }
 
 output "rds_prod_endpoint" {

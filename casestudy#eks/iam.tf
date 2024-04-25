@@ -15,6 +15,9 @@ resource "aws_iam_role" "eks_cluster" {
   ]
 }
 POLICY
+  tags = {
+    yor_trace = "692b5ecf-0131-4776-bcfe-e14d50cc6282"
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
@@ -44,6 +47,9 @@ resource "aws_iam_role" "eks_nodes" {
   ]
 }
 POLICY
+  tags = {
+    yor_trace = "d2ae9184-42ca-4a4b-94bc-e5b385caad99"
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy" {

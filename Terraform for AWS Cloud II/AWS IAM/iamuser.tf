@@ -2,10 +2,16 @@
 
 resource "aws_iam_user" "adminuser1" {
   name = "adminuser1"
+  tags = {
+    yor_trace = "a8a5711a-7bb1-4b25-ba47-93930dd529a1"
+  }
 }
 
 resource "aws_iam_user" "adminuser2" {
   name = "adminuser2"
+  tags = {
+    yor_trace = "485c533c-90ce-4c71-bc67-aa521c6f85c9"
+  }
 }
 
 # Group TF Definition

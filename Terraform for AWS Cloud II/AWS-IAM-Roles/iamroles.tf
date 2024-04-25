@@ -17,12 +17,15 @@ resource "aws_iam_role" "s3-levelupbucket-role" {
 }
 EOF
 
+  tags = {
+    yor_trace = "655a0d58-cd8d-48ea-89c3-a85b7f123a83"
+  }
 }
 
 #Policy to attach the S3 Bucket Role
 resource "aws_iam_role_policy" "s3-levelupmybucket-role-policy" {
-  name = "s3-levelupmybucket-role-policy"
-  role = aws_iam_role.s3-levelupbucket-role.id
+  name   = "s3-levelupmybucket-role-policy"
+  role   = aws_iam_role.s3-levelupbucket-role.id
   policy = <<EOF
 {
     "Version": "2012-10-17",
@@ -47,4 +50,7 @@ EOF
 resource "aws_iam_instance_profile" "s3-levelupbucket-role-instanceprofile" {
   name = "s3-levelupbucket-role"
   role = aws_iam_role.s3-levelupbucket-role.name
+  tags = {
+    yor_trace = "7f3a1215-31ad-4e4b-8aa6-8ce2b24e0f67"
+  }
 }
