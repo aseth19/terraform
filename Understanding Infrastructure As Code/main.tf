@@ -8,8 +8,9 @@ resource "aws_instance" "app_server" {
   instance_type = "t2.micro"
 
   tags = {
-    Name = "ExampleAppServerInstance"
+    Name      = "ExampleAppServerInstance"
+    yor_trace = "342389ca-19ee-4b5d-a95e-94f4cfa94c8f"
   }
   ebs_optimized = true
-  monitoring = true
+  monitoring    = true
 }

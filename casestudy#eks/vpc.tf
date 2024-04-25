@@ -13,6 +13,7 @@ module "vpc" {
   enable_vpn_gateway = false
 
   tags = {
-    Name = "${var.cluster-name}-vpc"
+    Name      = "${var.cluster-name}-vpc"
+    yor_trace = "d7e6bf23-ece2-4e15-91ab-55d91d5fec60"
   }
 }
