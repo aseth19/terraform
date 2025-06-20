@@ -6,70 +6,76 @@
 # }
 
 module "levelup-rds" {
-    source      = "../module/rds"
+  source = "../module/rds"
 
-    ENVIRONMENT = var.ENVIRONMENT
-    AWS_REGION  = var.AWS_REGION
-    vpc_private_subnet1 = var.vpc_private_subnet1
-    vpc_private_subnet2 = var.vpc_private_subnet2
-    vpc_id = var.vpc_id
+  ENVIRONMENT         = var.ENVIRONMENT
+  AWS_REGION          = var.AWS_REGION
+  vpc_private_subnet1 = var.vpc_private_subnet1
+  vpc_private_subnet2 = var.vpc_private_subnet2
+  vpc_id              = var.vpc_id
 }
 
-resource "aws_security_group" "levelup_webservers"{
+resource "aws_security_group" "levelup_webservers" {
   tags = {
-    Name = "${var.ENVIRONMENT}-levelup-webservers"
+    Name      = "${var.ENVIRONMENT}-levelup-webservers"
+    Env       = "prod"
+    yor_trace = "dc7bebb0-2a90-420d-81fb-e75c419e2b4f"
   }
-  
-  name          = "${var.ENVIRONMENT}-levelup-webservers"
-  description   = "Created by Levelup"
-  vpc_id        = var.vpc_id
+
+  name        = "${var.ENVIRONMENT}-levelup-webservers"
+  description = "Created by Levelup"
+  vpc_id      = var.vpc_id
 
   ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
     cidr_blocks = ["${var.SSH_CIDR_WEB_SERVER}"]
 
   }
 
   ingress {
-    from_port = 80
-    to_port = 80
-    protocol = "tcp"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
 
   }
-  
+
   ingress {
-    from_port = 443
-    to_port = 443
-    protocol = "tcp"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
 
   }
-  
+
   egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
 #Resource key pair
 resource "aws_key_pair" "levelup_key" {
-  key_name      = "levelup_key"
-  public_key    = file(var.public_key_path)
+  key_name   = "levelup_key"
+  public_key = file(var.public_key_path)
+  tags = {
+    Env       = "prod"
+    yor_trace = "977a4cd4-693c-45a9-800f-0fb65685724c"
+  }
 }
 
 resource "aws_launch_configuration" "launch_config_webserver" {
-  name   = "launch_config_webserver"
-  image_id      = lookup(var.AMIS, var.AWS_REGION)
-  instance_type = var.INSTANCE_TYPE
-  user_data = "#!/bin/bash\napt-get update\napt-get -y install net-tools nginx\nMYIP=`ifconfig | grep -E '(inet 10)|(addr:10)' | awk '{ print $2 }' | cut -d ':' -f2`\necho 'Hello Team\nThis is my IP: '$MYIP > /var/www/html/index.html"
+  name            = "launch_config_webserver"
+  image_id        = lookup(var.AMIS, var.AWS_REGION)
+  instance_type   = var.INSTANCE_TYPE
+  user_data       = "#!/bin/bash\napt-get update\napt-get -y install net-tools nginx\nMYIP=`ifconfig | grep -E '(inet 10)|(addr:10)' | awk '{ print $2 }' | cut -d ':' -f2`\necho 'Hello Team\nThis is my IP: '$MYIP > /var/www/html/index.html"
   security_groups = [aws_security_group.levelup_webservers.id]
-  key_name = aws_key_pair.levelup_key.key_name
-  
+  key_name        = aws_key_pair.levelup_key.key_name
+
   root_block_device {
     volume_type = "gp2"
     volume_size = "20"
@@ -101,6 +107,10 @@ resource "aws_lb" "levelup-load-balancer" {
   access_logs {
     enabled = true
   }
+  tags = {
+    Env       = "prod"
+    yor_trace = "540f9b95-5e71-4778-88b9-c13153a4313f"
+  }
 }
 
 # Add Target Group
@@ -109,6 +119,10 @@ resource "aws_lb_target_group" "load-balancer-target-group" {
   port     = 80
   protocol = "HTTP"
   vpc_id   = var.vpc_id
+  tags = {
+    Env       = "prod"
+    yor_trace = "d3e96ed6-9584-413c-a4f9-523400d95318"
+  }
 }
 
 # Adding HTTP listener

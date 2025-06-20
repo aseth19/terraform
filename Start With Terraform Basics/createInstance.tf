@@ -5,8 +5,10 @@ resource "aws_instance" "MyFirstInstnace" {
   instance_type = "t4g.micro"
 
   tags = {
-    Name = "demoinstnce-${count.index}"
+    Name      = "demoinstnce-${count.index}"
+    Env       = "prod"
+    yor_trace = "d66051d4-1bff-4d5b-866b-4e72a99b82e8"
   }
-   ebs_optimized = true
-   monitoring = true
+  ebs_optimized = true
+  monitoring    = true
 }

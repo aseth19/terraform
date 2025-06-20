@@ -17,9 +17,11 @@ resource "aws_security_group" "allow-levelup-ssh" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  
+
   tags = {
-    Name = "allow-levelup-ssh"
+    Name      = "allow-levelup-ssh"
+    Env       = "prod"
+    yor_trace = "ec51b9bd-9c87-4c9a-8bf4-52d914566436"
   }
 }
 

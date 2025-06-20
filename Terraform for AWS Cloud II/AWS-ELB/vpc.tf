@@ -1,13 +1,15 @@
 #Create AWS VPC
 resource "aws_vpc" "levelupvpc" {
-  cidr_block       = "10.0.0.0/16"
-  instance_tenancy = "default"
+  cidr_block           = "10.0.0.0/16"
+  instance_tenancy     = "default"
   enable_dns_support   = "true"
   enable_dns_hostnames = "true"
   enable_classiclink   = "false"
 
   tags = {
-    Name = "levelupvpc"
+    Name      = "levelupvpc"
+    Env       = "prod"
+    yor_trace = "43bb076f-f152-413d-9dba-7490d048c5d5"
   }
 }
 
@@ -19,7 +21,9 @@ resource "aws_subnet" "levelupvpc-public-1" {
   availability_zone       = "us-east-2a"
 
   tags = {
-    Name = "levelupvpc-public-1"
+    Name      = "levelupvpc-public-1"
+    Env       = "prod"
+    yor_trace = "ee6e631c-cbe7-466a-8846-5539576cb70f"
   }
 }
 
@@ -30,7 +34,9 @@ resource "aws_subnet" "levelupvpc-public-2" {
   availability_zone       = "us-east-2b"
 
   tags = {
-    Name = "levelupvpc-public-2"
+    Name      = "levelupvpc-public-2"
+    Env       = "prod"
+    yor_trace = "d2fb868b-709f-4d46-a8cd-cec5ac5368e8"
   }
 }
 
@@ -41,7 +47,9 @@ resource "aws_subnet" "levelupvpc-public-3" {
   availability_zone       = "us-east-2c"
 
   tags = {
-    Name = "levelupvpc-public-3"
+    Name      = "levelupvpc-public-3"
+    Env       = "prod"
+    yor_trace = "c38448ab-af0a-4385-b248-754da2a39028"
   }
 }
 
@@ -53,7 +61,9 @@ resource "aws_subnet" "levelupvpc-private-1" {
   availability_zone       = "us-east-2a"
 
   tags = {
-    Name = "levelupvpc-private-1"
+    Name      = "levelupvpc-private-1"
+    Env       = "prod"
+    yor_trace = "f51cfd29-fa87-49d2-9ce6-8a07613e93b5"
   }
 }
 
@@ -64,7 +74,9 @@ resource "aws_subnet" "levelupvpc-private-2" {
   availability_zone       = "us-east-2b"
 
   tags = {
-    Name = "levelupvpc-private-2"
+    Name      = "levelupvpc-private-2"
+    Env       = "prod"
+    yor_trace = "bed3eb68-400b-4102-ba1d-d7e746e8e8d1"
   }
 }
 
@@ -75,7 +87,9 @@ resource "aws_subnet" "levelupvpc-private-3" {
   availability_zone       = "us-east-2c"
 
   tags = {
-    Name = "levelupvpc-private-3"
+    Name      = "levelupvpc-private-3"
+    Env       = "prod"
+    yor_trace = "bd4b99e3-7f08-49f1-8b22-746bea5c98c4"
   }
 }
 
@@ -84,7 +98,9 @@ resource "aws_internet_gateway" "levelup-gw" {
   vpc_id = aws_vpc.levelupvpc.id
 
   tags = {
-    Name = "levelup-gw"
+    Name      = "levelup-gw"
+    Env       = "prod"
+    yor_trace = "a436c2e8-599c-4ad5-8dad-0e82864e140a"
   }
 }
 
@@ -97,7 +113,9 @@ resource "aws_route_table" "levelup-public" {
   }
 
   tags = {
-    Name = "levelup-public-1"
+    Name      = "levelup-public-1"
+    Env       = "prod"
+    yor_trace = "96931524-f3c1-48fc-a4b1-3d89ddaf5155"
   }
 }
 

@@ -17,9 +17,11 @@ resource "aws_security_group" "allow-levelup-ssh" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  
+
   tags = {
-    Name = "allow-levelup-ssh"
+    Name      = "allow-levelup-ssh"
+    Env       = "prod"
+    yor_trace = "0b820ab0-3568-4c87-aa11-96a5378f2545"
   }
 }
 
@@ -37,13 +39,15 @@ resource "aws_security_group" "allow-mariadb" {
   }
 
   ingress {
-    from_port   = 3306
-    to_port     = 3306
-    protocol    = "tcp"
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
     security_groups = [aws_security_group.allow-levelup-ssh.id]
   }
-  
+
   tags = {
-    Name = "allow-mariadb"
+    Name      = "allow-mariadb"
+    Env       = "prod"
+    yor_trace = "8b2befec-009d-471f-8bab-2a0711ee37ad"
   }
 }
