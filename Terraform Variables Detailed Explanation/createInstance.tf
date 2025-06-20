@@ -4,10 +4,12 @@ resource "aws_instance" "MyFirstInstnace" {
   instance_type = "t2.micro"
 
   tags = {
-    Name = "demoinstnce"
+    Name      = "demoinstnce"
+    Env       = "prod"
+    yor_trace = "74f0a353-17df-4d46-b83b-158ef80ecfa0"
   }
 
   security_groups = var.Security_Group
-   ebs_optimized = true
-   monitoring = true
+  ebs_optimized   = true
+  monitoring      = true
 }

@@ -1,15 +1,19 @@
 #AutoScaling Launch Configuration
 resource "aws_launch_configuration" "levelup-launchconfig" {
-  name_prefix     = "levelup-launchconfig"
-  image_id        = lookup(var.AMIS, var.AWS_REGION)
-  instance_type   = "t2.micro"
-  key_name        = aws_key_pair.levelup_key.key_name
+  name_prefix   = "levelup-launchconfig"
+  image_id      = lookup(var.AMIS, var.AWS_REGION)
+  instance_type = "t2.micro"
+  key_name      = aws_key_pair.levelup_key.key_name
 }
 
 #Generate Key
 resource "aws_key_pair" "levelup_key" {
-    key_name = "levelup_key"
-    public_key = file(var.PATH_TO_PUBLIC_KEY)
+  key_name   = "levelup_key"
+  public_key = file(var.PATH_TO_PUBLIC_KEY)
+  tags = {
+    Env       = "prod"
+    yor_trace = "7cd65ebd-7886-4467-bb2a-280c0850f3a1"
+  }
 }
 
 #Autoscaling Group
@@ -58,6 +62,10 @@ resource "aws_cloudwatch_metric_alarm" "levelup-cpu-alarm" {
 
   actions_enabled = true
   alarm_actions   = [aws_autoscaling_policy.levelup-cpu-policy.arn]
+  tags = {
+    Env       = "prod"
+    yor_trace = "1de08ab8-39c8-4779-9eef-77a9ef293609"
+  }
 }
 
 #Auto Descaling Policy
@@ -88,4 +96,8 @@ resource "aws_cloudwatch_metric_alarm" "levelup-cpu-alarm-scaledown" {
 
   actions_enabled = true
   alarm_actions   = [aws_autoscaling_policy.levelup-cpu-policy-scaledown.arn]
+  tags = {
+    Env       = "prod"
+    yor_trace = "90492727-d696-4fba-8948-01fd98b9477f"
+  }
 }
