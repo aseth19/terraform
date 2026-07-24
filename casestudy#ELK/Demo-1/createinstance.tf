@@ -1,7 +1,11 @@
 
 resource "aws_key_pair" "levelup_key" {
-    key_name = "levelup_key"
-    public_key = file(var.PATH_TO_PUBLIC_KEY)
+  key_name   = "levelup_key"
+  public_key = file(var.PATH_TO_PUBLIC_KEY)
+  tags = {
+    Env       = "prod"
+    yor_trace = "c0620556-cc54-43f6-89e7-ecb69fac2c1d"
+  }
 }
 
 resource "aws_security_group" "allow_elk" {
@@ -47,32 +51,42 @@ resource "aws_security_group" "allow_elk" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  tags = {
+    Env       = "prod"
+    yor_trace = "1c1fcae5-9567-4937-80da-763afe3da052"
+  }
 }
 
 #Create AWS Instance
 resource "aws_instance" "MyFirstInstnace" {
-  ami           = lookup(var.AMIS, var.AWS_REGION)
-  instance_type = "m4.large"
+  ami               = lookup(var.AMIS, var.AWS_REGION)
+  instance_type     = "m4.large"
   availability_zone = "ap-south-1a"
-  key_name      = aws_key_pair.levelup_key.key_name
+  key_name          = aws_key_pair.levelup_key.key_name
 
   vpc_security_group_ids = [
     aws_security_group.allow_elk.id,
   ]
 
   depends_on = [aws_security_group.allow_elk]
-  
+
   tags = {
-    Name = "custom_instance"
+    Name      = "custom_instance"
+    Env       = "prod"
+    yor_trace = "10d9c86c-6485-440d-a1ee-28b53c25e01e"
   }
-   ebs_optimized = true
-   monitoring = true
+  ebs_optimized = true
+  monitoring    = true
 }
 
 resource "aws_eip" "ip" {
   instance = aws_instance.MyFirstInstnace.id
+  tags = {
+    Env       = "prod"
+    yor_trace = "e066d580-105a-42fb-916f-0ac2b25bbe86"
+  }
 }
 
 output "public_ip" {
-  value = aws_instance.MyFirstInstnace.public_ip 
+  value = aws_instance.MyFirstInstnace.public_ip
 }

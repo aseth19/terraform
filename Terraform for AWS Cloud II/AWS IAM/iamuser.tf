@@ -2,10 +2,18 @@
 
 resource "aws_iam_user" "adminuser1" {
   name = "adminuser1"
+  tags = {
+    Env       = "prod"
+    yor_trace = "4be3b752-f10c-48ea-ab69-471c390f2f57"
+  }
 }
 
 resource "aws_iam_user" "adminuser2" {
   name = "adminuser2"
+  tags = {
+    Env       = "prod"
+    yor_trace = "ce17cabf-b661-46c9-9c08-e096de69cbcf"
+  }
 }
 
 # Group TF Definition

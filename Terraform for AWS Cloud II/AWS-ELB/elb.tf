@@ -3,7 +3,7 @@ resource "aws_elb" "levelup-elb" {
   name            = "levelup-elb"
   subnets         = [aws_subnet.levelupvpc-public-1.id, aws_subnet.levelupvpc-public-2.id]
   security_groups = [aws_security_group.levelup-elb-securitygroup.id]
-  
+
   listener {
     instance_port     = 80
     instance_protocol = "http"
@@ -24,7 +24,9 @@ resource "aws_elb" "levelup-elb" {
   connection_draining_timeout = 400
 
   tags = {
-    Name = "levelup-elb"
+    Name      = "levelup-elb"
+    Env       = "prod"
+    yor_trace = "1f2f2f28-0f8b-4317-88a2-1db01554cb8d"
   }
 }
 
@@ -33,7 +35,7 @@ resource "aws_security_group" "levelup-elb-securitygroup" {
   vpc_id      = aws_vpc.levelupvpc.id
   name        = "levelup-elb-sg"
   description = "security group for Elastic Load Balancer"
-  
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -49,7 +51,9 @@ resource "aws_security_group" "levelup-elb-securitygroup" {
   }
 
   tags = {
-    Name = "levelup-elb-sg"
+    Name      = "levelup-elb-sg"
+    Env       = "prod"
+    yor_trace = "a3370ee4-27c4-4577-94f2-0368ac03b2a8"
   }
 }
 
@@ -58,7 +62,7 @@ resource "aws_security_group" "levelup-instance" {
   vpc_id      = aws_vpc.levelupvpc.id
   name        = "levelup-instance"
   description = "security group for instances"
-  
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -81,6 +85,8 @@ resource "aws_security_group" "levelup-instance" {
   }
 
   tags = {
-    Name = "levelup-instance"
+    Name      = "levelup-instance"
+    Env       = "prod"
+    yor_trace = "1c33a9fc-51b1-45af-b1dc-afc5d87d17b3"
   }
 }
