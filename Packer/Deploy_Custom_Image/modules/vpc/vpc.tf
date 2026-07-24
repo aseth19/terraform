@@ -15,6 +15,7 @@ module "levelup-vpc" {
   tags = {
     Terraform   = "true"
     Environment = var.ENVIRONMENT
+    yor_trace   = "c1639a9d-411e-41f6-b100-69bfe6aa5a9b"
   }
 }
 
